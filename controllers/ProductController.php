@@ -1,8 +1,9 @@
-<?php 
+<?php
 
 namespace app\controllers;
 
 use app\models\Product;
+use Yii;
 use yii\web\Controller;
 
 class ProductController extends Controller
@@ -15,8 +16,14 @@ class ProductController extends Controller
     public function actionAdd()
     {
         $model = new Product();
-
-        return $this->render("add",['model'=>$model]);
+        if (Yii::$app->request->post()) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate()) {
+                $model->save();
+                $this->redirect("index");
+            }
+        }
+        return $this->render("add", ['model' => $model]);
     }
     public function actionView($id)
     {
@@ -28,7 +35,6 @@ class ProductController extends Controller
     }
     public function actionDelete($id)
     {
-        echo "Action Delete".$id;
+        echo "Action Delete" . $id;
     }
-
 }

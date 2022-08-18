@@ -11,19 +11,32 @@ class CategoryController extends Controller
 
     public function actionIndex()
     {
-        return $this->render("index");
+        $model = new Category();
+        $dataProvider = $model->search();
+        return $this->render("index", ['dataProvider' => $dataProvider]);
     }
 
     public function actionAdd()
     {
         $model = new Category();
-     
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } 
+
+        // if(isset($_POST)) {
+        //     $name = $_POST['name'];
+        //     $sql = "insert into category column(`name`) values('$name')";
+        //     $result = mysqli_query($sql);
+        //      if($result) {
+        //       header("Location:index.php");
+        //     }
+        // }
+
+        if (Yii::$app->request->post()) {
+            $model->load(Yii::$app->request->post());
+            if ($model->validate &&$model->save()) {
+                $this->redirect("index");
+            }
+        }
 
         return $this->render("add", ['model' => $model]);
-
     }
 
     public function actionView($id)

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\data\ActiveDataProvider;
 
 /**
  * This is the model class for table "category".
@@ -40,5 +41,18 @@ class Category extends \yii\db\ActiveRecord
             'id' => 'ID',
             'name' => 'Name',
         ];
+    }
+
+    public function search(){
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => Category::find(),
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+        ]);
+
+        return $dataProvider;
+
     }
 }

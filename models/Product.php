@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use Faker\Core\Number;
 use Yii;
 
 /**
@@ -13,7 +14,7 @@ use Yii;
  * @property string $description
  * @property string $price
  * @property string $status
- * @property string $color variant
+ * @property string $color_variant
  */
 class Product extends \yii\db\ActiveRecord
 {
@@ -31,9 +32,10 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'category_id', 'description', 'price', 'status', 'color variant'], 'required'],
+            [['name', 'category_id', 'description', 'price', 'status', 'color_variant'], 'required'],
             [['category_id'], 'integer'],
-            [['name', 'description', 'price', 'status', 'color variant'], 'string', 'max' => 255],
+            [['price'],'number'],
+            [['name', 'description', 'price', 'status'], 'string', 'max' => 255],
         ];
     }
 
@@ -43,13 +45,23 @@ class Product extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
-            'name' => 'Name',
-            'category_id' => 'Category ID',
+            'id' => 'Id',
+            'name' => 'Product Name',
+            'category_id' => 'Product Category',
             'description' => 'Description',
             'price' => 'Price',
             'status' => 'Status',
-            'color variant' => 'Color Variant',
+            'color_variant' => 'Color Variant',
         ];
+    }
+
+    public function beforeSave($insert)
+    {
+        $this->color_variant = implode(",", $this->color_variant);
+        if (parent::beforeSave($insert)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

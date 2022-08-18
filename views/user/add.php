@@ -1,33 +1,54 @@
+<?php
+
+use yii\helpers\Html;
+use yii\widgets\ActiveForm; ?>
 <div class="container">
-<div class="text-center">
-<h3>User Add</h3>
-</div>
-    <form method="POST" class="g-3">
-        <div class="row">
-            <div class="col-md-6 offset-md-3 pt-3 pb-3">
-                <input type="text" class="form-control" name="name" id="name" placeholder="Enter your name">
-            </div>
-            <div class="col-md-6 offset-md-3 offset-md-3 pt-3 pb-3">
-                <input type="text" class="form-control" name="age" id="age" placeholder="Enter your age">
-            </div>
-            <div class="col-md-6 offset-md-3 pt-3 pb-3">
-                <input type="text" class="form-control" name="gender" id="gender" placeholder="Enter your gender">
-            </div>
-            <div class="col-md-6 offset-md-3 pt-3 pb-3">
-                <input type="text" class="form-control" name="email" id="email" placeholder="Enter your email">
-            </div>
-            <div class="col-md-6 offset-md-3 pt-3 pb-3">
-                <input type="text" class="form-control" name="phone" id="phone" placeholder="Enter your phone">
-            </div>
-            <div class="col-md-6 offset-md-3 pt-3 pb-3 ">
-                <textarea class="form-control" name="other_info" id="other_info" placeholder="Enter other information"></textarea>
-            </div>
+    <div class="text-center">
+        <h3>User Add</h3>
+    </div>
+    <?php
+    $form = ActiveForm::begin()
+    ?>
+    <div class="row">
+        <div class="col">
+            <?php  echo $form->field($model,'name'); ?>
         </div>
-        <div class="text-center my-3">
-            <button class="btn btn-primary" type="submit">Submit</button>
+    </div>
+    <div class="row">
+        <div class="col">
+            <?php echo $form->field($model,'age'); ?>
         </div>
-        <div class="text-center">
+    </div>
+    <div class="row">
+        <div class="col">
+            <?php echo $form->field($model,'gender')->radioList([
+                1 => 'Male',
+                2 => 'Female',
+            ]); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <?php echo $form->field($model,'email'); ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">   
+            <?php echo $form->field($model,'phone') ?>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <?php  echo $form->field($model,'other_information')->textarea()?>
+        </div>
+    </div>
+    <div class="row text-center my-3">
+        <div class="col ">
+            <?php echo Html::submitButton('Add',['class'=>'btn btn-primary']); ?>
+        </div>
+    </div>
+    <div class="text-center">
             <a class="btn btn-primary" href="/user/index">Back</a>
         </div>
-    </form>
+    <?php ActiveForm::end() ?>
 </div>

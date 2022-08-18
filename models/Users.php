@@ -29,10 +29,13 @@ class Users extends \yii\db\ActiveRecord
      * {@inheritdoc}
      */
     public function rules()
-    {   
+    {
         return [
-            [['name', 'age', 'gender', 'email'], 'required'],
-            [['age', 'gender', 'phone'], 'integer'],
+            [['name', 'age', 'gender', 'email', 'phone'], 'required'],
+            [['gender'], 'integer'],
+            [['age'], 'integer'],
+            [['phone'], 'integer'],
+            [['phone'], 'string', 'length' => 10],
             [['name'], 'string', 'max' => 30],
             [['email', 'other_information'], 'string', 'max' => 255],
             [['email'], 'unique'],
